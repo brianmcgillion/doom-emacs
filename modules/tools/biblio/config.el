@@ -98,22 +98,16 @@ In case of directory the path must end with a slash."
   :preface
   ;; if the user has not set a template mechanism set a reasonable one of them
   ;; The package already tests for nil itself so we define a dummy tester
-  (defvar org-roam-bibtex-preformat-keywords nil)
-  (defvar org-roam-bibtex-templates nil)
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :config
-  (unless org-roam-bibtex-preformat-keywords
-    (setq org-roam-bibtex-preformat-keywords
-          '("=key=" "title" "url" "file" "author-or-editor" "keywords")))
-  (unless org-roam-bibtex-templates
-    (setq org-roam-bibtex-templates
-          '(("r" "ref" plain (function org-roam-capture--get-point)
-             ""
-             :file-name "${slug}"
-             :head "#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}
+  (defvar orb-preformat-keywords
+    '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+  (defvar orb-templates
+    '(("r" "ref" plain (function org-roam-capture--get-point)
+       ""
+       :file-name "${slug}"
+       :head "#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}
 
 - tags ::
 - keywords :: ${keywords}
 
 \n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(org-roam-bibtex-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
-             :unnarrowed t)))))
+             :unnarrowed t))))
